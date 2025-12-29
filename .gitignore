@@ -15,3 +15,9 @@ cache/
 
 # Local settings
 .claude/
+
+# UV / Local dev files
+.python-version
+uv.lock
+main.py
+nul
