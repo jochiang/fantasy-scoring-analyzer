@@ -1,0 +1,35 @@
+{
+  "name": "Yahoo Standard",
+  "passing": {
+    "passing_yards_per_point": 25,
+    "passing_tds": 4,
+    "interceptions": -1,
+    "completions": 0,
+    "attempts": 0,
+    "sacks": 0,
+    "pass_40_yd": 0,
+    "pass_40_yd_td": 0,
+    "pick_six": 0
+  },
+  "rushing": {
+    "rushing_yards_per_point": 10,
+    "rushing_tds": 6,
+    "carries": 0,
+    "rush_40_yd": 0,
+    "rush_40_yd_td": 0
+  },
+  "receiving": {
+    "receptions": 0,
+    "receiving_yards_per_point": 10,
+    "receiving_tds": 6,
+    "rec_40_yd": 0,
+    "rec_40_yd_td": 0
+  },
+  "misc": {
+    "fumbles": 0,
+    "fumbles_lost": -2,
+    "two_pt_conversions": 2,
+    "return_yards_per_point": 0,
+    "return_tds": 6
+  }
+}
