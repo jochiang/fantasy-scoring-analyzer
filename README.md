@@ -2,7 +2,9 @@
 
 An interactive tool to analyze how different fantasy football scoring settings affect player rankings.
 
-## Quick Start
+**Live App:** [fantasy-fb-scoring.streamlit.app](https://fantasy-fb-scoring.streamlit.app/)
+
+## Quick Start (Local Development)
 
 ```bash
 cd fantasy-scoring-analyzer
