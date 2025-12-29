@@ -1,9 +1,10 @@
 """
 Data loader for nflverse data.
 Fetches and caches seasonal stats, play-by-play, and roster data.
+Uses nflreadpy (replacement for archived nfl-data-py).
 """
 
-import nfl_data_py as nfl
+import nflreadpy as nfl
 import pandas as pd
 from pathlib import Path
 
@@ -32,7 +33,9 @@ def load_seasonal_stats(year: int, use_cache: bool = True) -> pd.DataFrame:
     if use_cache and cache_file.exists():
         return pd.read_parquet(cache_file)
 
-    stats = nfl.import_seasonal_data([year])
+    # nflreadpy uses load_player_stats with summary_level for seasonal data
+    # Returns Polars DataFrame, convert to pandas
+    stats = nfl.load_player_stats(year, summary_level="reg+post").to_pandas()
     stats.to_parquet(cache_file)
     return stats
 
@@ -54,7 +57,8 @@ def load_pbp_data(year: int, use_cache: bool = True) -> pd.DataFrame:
     if use_cache and cache_file.exists():
         return pd.read_parquet(cache_file)
 
-    pbp = nfl.import_pbp_data([year])
+    # nflreadpy returns Polars DataFrame, convert to pandas
+    pbp = nfl.load_pbp(year).to_pandas()
     pbp.to_parquet(cache_file)
     return pbp
 
@@ -76,7 +80,8 @@ def load_rosters(year: int, use_cache: bool = True) -> pd.DataFrame:
     if use_cache and cache_file.exists():
         return pd.read_parquet(cache_file)
 
-    rosters = nfl.import_seasonal_rosters([year])
+    # nflreadpy returns Polars DataFrame, convert to pandas
+    rosters = nfl.load_rosters(year).to_pandas()
     rosters.to_parquet(cache_file)
     return rosters
 
