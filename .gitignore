@@ -21,3 +21,4 @@ cache/
 uv.lock
 main.py
 nul
+pyproject.toml
