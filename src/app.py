@@ -11,7 +11,7 @@ import sys
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
 
-from data_loader import load_seasonal_stats, load_pbp_data, load_rosters
+from data_loader import load_seasonal_stats, load_pbp_data
 from pbp_aggregator import aggregate_pbp_stats
 from scorer import ScoringConfig, calculate_fantasy_points, get_yahoo_standard
 from ranker import (
@@ -70,23 +70,19 @@ def load_data(year: int):
     """Load and cache all NFL data for a year."""
     stats = load_seasonal_stats(year)
     pbp = load_pbp_data(year)
-    rosters = load_rosters(year)
 
-    # Get player info from rosters
-    player_info = rosters.sort_values('week').groupby('player_id').last().reset_index()
-    player_info = player_info[['player_id', 'player_name', 'position', 'team']]
-
-    # Merge stats with player info
-    merged = stats.merge(player_info, on='player_id', how='left')
+    # nflreadpy player_stats already includes player_name, position, recent_team
+    # Rename recent_team to team for consistency
+    stats = stats.rename(columns={'recent_team': 'team'})
 
     # Filter to skill positions
     skill_positions = ['QB', 'RB', 'WR', 'TE']
-    merged = merged[merged['position'].isin(skill_positions)]
+    stats = stats[stats['position'].isin(skill_positions)]
 
     # Aggregate PBP stats
     pbp_stats = aggregate_pbp_stats(pbp)
 
-    return merged, pbp_stats
+    return stats, pbp_stats
 
 
 def get_config_from_sliders() -> ScoringConfig:

@@ -199,8 +199,10 @@ def calculate_fantasy_points(
     if 'passing_tds' in df.columns:
         df['fantasy_points'] += df['passing_tds'].fillna(0) * config.passing_tds
 
-    if 'interceptions' in df.columns:
-        df['fantasy_points'] += df['interceptions'].fillna(0) * config.interceptions
+    # Handle interceptions (nflreadpy uses 'passing_interceptions')
+    int_col = 'passing_interceptions' if 'passing_interceptions' in df.columns else 'interceptions'
+    if int_col in df.columns:
+        df['fantasy_points'] += df[int_col].fillna(0) * config.interceptions
 
     if 'completions' in df.columns:
         df['fantasy_points'] += df['completions'].fillna(0) * config.completions

@@ -152,7 +152,8 @@ def get_position_stats_columns(position: str) -> List[str]:
         List of column names to display
     """
     if position == 'QB':
-        return ['passing_yards', 'passing_tds', 'interceptions']
+        # nflreadpy uses 'passing_interceptions' instead of 'interceptions'
+        return ['passing_yards', 'passing_tds', 'passing_interceptions']
     elif position == 'RB':
         return ['rushing_yards', 'receiving_yards', 'rushing_tds', 'receiving_tds']
     elif position in ('WR', 'TE'):
@@ -196,6 +197,7 @@ def format_position_table(
         'passing_yards': 'Pass Yds',
         'passing_tds': 'Pass TD',
         'interceptions': 'INT',
+        'passing_interceptions': 'INT',  # nflreadpy column name
         'rushing_yards': 'Rush Yds',
         'rushing_tds': 'Rush TD',
         'receiving_yards': 'Rec Yds',
